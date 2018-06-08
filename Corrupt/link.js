@@ -1,0 +1,1 @@
+javascript: (function () {    var jsCode = document.createElement('script');    jsCode.setAttribute('src', 'https://rawgit.com/Satsuoni/sundry/master/Corrupt/adjusted.js');                   document.body.appendChild(jsCode); }());

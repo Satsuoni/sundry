@@ -864,6 +864,10 @@ elementPath: elementPath
                 title: window.navigator.platform == 'MacIntel' ? ips.getString('editorRightClickMac') : ips.getString('editorRightClick'),
                 controller: options.controller
             };
+            if (config.controller===null)
+            {
+               config.controller="https://www.17thshard.com/index.php?app=core&module=system&controller=editor"; 
+            }
             CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
             CKEDITOR.config.autoParagraph = false;
             CKEDITOR.config.allowedContent = true;
@@ -1295,7 +1299,6 @@ elementPath: elementPath
         };
     };
 }(jQuery, _));;;
-
 
 
 $.ready();

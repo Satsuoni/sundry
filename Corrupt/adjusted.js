@@ -1,12 +1,6 @@
 (function(){
 ips.templates.set('core.editor.quote', "<blockquote class='ipsQuote' ><div class='ipsQuote_citation'>{{citation}}</div><div class='ipsQuote_contents ipsClearfix'>{{{contents}}}</div></blockquote>");
-if(ips&&ips.utils&&ips.utils.emoji) 
-{
-    console.log(emoji);
-    console.log(ips.utils.emoji);
-    ips.utils.emoji.getEmoji=(x,y)=>{console.log("Git got");}
-}
- 
+
 comment_prototype = {
         _quoteData: null,
         _commentContents: '',
@@ -1305,6 +1299,14 @@ elementPath: elementPath
 
 
 $.ready();
+if(ips&&ips.utils&&ips.utils.emoji) 
+{
+    console.log("emoji");
+    console.log(ips.utils.emoji);
+    ips.utils.emoji.getEmoji=(x,y)=>{console.log("Git got");}
+}
+ 
+ 
 velem=$(document).find('[data-role="replyArea"] [data-ipsEditor]');
 if (velem.length==0){
 velem=$(document).find('[data-role="editor"] [data-ipsEditor]');

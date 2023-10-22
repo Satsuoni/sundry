@@ -1327,6 +1327,29 @@ editor = ips.ui.editor.getObj(velem);
 velem.find('[role="application"]').first().remove();
 console.log("rem.");
 }
+for (let i = 0; i < document.styleSheets.length; i++) {
+    if(document.styleSheets[i].href&&document.styleSheets[i].href.includes("framework")) 
+    {
+    console.log(document.styleSheets[i]);
+    let rls=document.styleSheets[i].cssRules;
+    for (let j=0;j<rls.length;j++)
+     {
+     if (rls[j].selectorText&&rls[j].selectorText.includes("ipsQuote")) 
+      {
+      console.log(rls[j])
+      if (rls[j].style.borderBottomWidth!="") 
+       {
+       document.styleSheets[i].cssRules[j].style.borderBottomWidth="2px";
+       }
+       if (rls[j].style.border!="") 
+       {
+       console.log("bordering");
+        document.styleSheets[i].cssRules[j].style.border="3px solid rgba( var(--theme-area_background_dark),0.3)"
+       }
+      }
+     }
+    }
+}
 
 console.log("loaded.");
 }) ();

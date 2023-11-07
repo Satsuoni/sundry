@@ -754,6 +754,7 @@ elementPath: elementPath
  editor.setKeystroke( CKEDITOR.CTRL +CKEDITOR.SHIFT+ 13 , 'cycleenter' ); //s -83 l -76
  editor.setKeystroke( CKEDITOR.CTRL + 83 , 'savedata' );
   editor.setKeystroke( CKEDITOR.CTRL + 76 , 'loaddata' );
+    editor.setKeystroke( CKEDITOR.CTRL + 81 , 'ipslink' ); //ctrl-q
         },
         
 

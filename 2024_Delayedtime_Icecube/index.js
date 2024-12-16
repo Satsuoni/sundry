@@ -187,8 +187,8 @@ async function tryReload() {
     createEventText2(rid,evid)
     createPulses(pulsemap, scaleFactor)
     createTrack(direction);
-    
-    document.querySelector('#loading-text').remove();
+    let ldscr=document.querySelector('#loading-text');
+    if (ldscr) ldscr.remove();
 } catch (e) {
     console.log(e);
 }

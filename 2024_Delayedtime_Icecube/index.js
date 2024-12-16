@@ -41,6 +41,7 @@ function createPulses(pulsemap, scaleFactor) {
         let [time, string_no, module_no, charge] = pulse;
         if (typeof string_no === "undefined" || typeof module_no === "undefined") continue;
         let om = document.querySelector(`#dom-${string_no}-${module_no}`);
+        if (om==null) continue;
         let delay = (time - minTime) / timeSpan * 5000;
         setTimeout(() => {
             let entity = document.createElement('a-sphere');
@@ -110,11 +111,12 @@ function animateEvent(startPos, endPos, scaleFactor) {
     document.querySelector('a-scene').appendChild(anim);
 }
 const clearAnim = () => document.querySelectorAll('#animation').forEach(neu => neu.remove());
-
+const clearText = () => document.querySelectorAll('#event-text').forEach(neu => neu.remove());
 function clearAll() {
   clearTrack();
   clearPulses();
   clearAnim();
+  clearText();
 }
 
 async function fetchPulsemap() {
@@ -185,7 +187,7 @@ async function tryReload() {
     createEventText2(rid,evid)
     createPulses(pulsemap, scaleFactor)
     createTrack(direction);
-    createDOMs(scaleFactor);
+    
     document.querySelector('#loading-text').remove();
 } catch (e) {
     console.log(e);
@@ -220,6 +222,6 @@ SmartInterval.prototype.forceExecution = function () {
   if (this.running) this.cycle(true);
 };
 
-
+createDOMs(scaleFactor);
 let interval = new SmartInterval(tryReload, 15000);
 interval.start();

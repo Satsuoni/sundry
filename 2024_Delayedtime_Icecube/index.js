@@ -39,6 +39,7 @@ function createPulses(pulsemap, scaleFactor) {
     let pulses = [];
     for(let pulse of pulsemap) {
         let [time, string_no, module_no, charge] = pulse;
+        if (typeof string_no === "undefined" || typeof module_no === "undefined") continue;
         let om = document.querySelector(`#dom-${string_no}-${module_no}`);
         let delay = (time - minTime) / timeSpan * 5000;
         setTimeout(() => {
@@ -154,18 +155,35 @@ function createEventText(event) {
     document.querySelector('#camera').appendChild(text);
 }
 
-
+function createEventText2(rid,eid) {
+    let text = document.createElement('a-text');
+    const [run_id, event_id] = [rid, eid];
+    text.setAttribute('value', `Run ID: ${run_id}\nEvent ID: ${event_id}\n`);
+    text.setAttribute('position', '0 0.75 -1');
+    text.setAttribute('align', 'center');
+    text.setAttribute('width', '1');
+    text.setAttribute('color', 'green');
+    text.setAttribute('id', 'event-text');
+    // Child of camera
+    document.querySelector('#camera').appendChild(text);
+}
 
 const scaleFactor = 0.03;
-try {
+function tryReload() {
+  try {
     //let event = await fetchEvent();
     //createEventText(event);
     //console.log(event);
-    let [direction, pulsemap] = await fetchPulsemap();
-    setInterval(() => {createPulses(pulsemap, scaleFactor)}, 5000);
+    let [direction, pulsemap,evid,rid] = await fetchPulsemap();
+    createEventText2(evid,rid)
+    createPulses(pulsemap, scaleFactor)
     createTrack(direction);
     createDOMs(scaleFactor);
     document.querySelector('#loading-text').remove();
 } catch (e) {
     console.log(e);
 }
+
+}
+
+setInterval(tryReload, 15000);

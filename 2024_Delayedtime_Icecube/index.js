@@ -54,9 +54,10 @@ function createPulses(pulsemap, scaleFactor) {
             document.querySelector('a-scene').appendChild(entity);
         }, delay);
     }
-    setTimeout(clearPulses, 5000);
+    //setTimeout(clearPulses, 5000);
 }
 
+const clearTrack = () => document.querySelectorAll('.track_point').forEach(pulse => pulse.remove());
 
 function createTrack(track) {
     const length = 720;
@@ -77,7 +78,7 @@ function createTrack(track) {
       
       // Note the order: x, y, z in A-Frame corresponds to x, z, -y in typical 3D space
       entity.setAttribute('position', `${x * scaleFactor} ${z * scaleFactor - 15} ${y * scaleFactor}`);
-      
+      entity.setAttribute('class', 'track_point');
       document.querySelector('a-scene').appendChild(entity); 
     }
     animateEvent(startPos, endPos, scaleFactor);
@@ -104,12 +105,17 @@ function animateEvent(startPos, endPos, scaleFactor) {
       to: `${endPos[0] * scaleFactor} ${endPos[2] * scaleFactor - 15} ${endPos[1] * scaleFactor}`,
       dur: duration,
       easing: 'linear',
-      loop: true
+      loop: false
     });
     document.querySelector('a-scene').appendChild(anim);
 }
+const clearAnim = () => document.querySelectorAll('#animation').forEach(neu => neu.remove());
 
-
+function clearAll() {
+  clearTrack();
+  clearPulses();
+  clearAnim();
+}
 
 async function fetchPulsemap() {
     const pulsemap = await fetch(`https://ar.obolus.net/last_cached_event`);
@@ -119,7 +125,7 @@ async function fetchPulsemap() {
     const track = csv[1].split(',').map(Number);
     const pulses = csv.slice(2);
     const lines = pulses.map(line => line.split(',').map(Number));
-    return [track, lines];
+    return [track, lines,data.event_id,data.run_id];
 }
 
 AFRAME.registerComponent('click-particle', {
@@ -175,7 +181,8 @@ async function tryReload() {
     //createEventText(event);
     //console.log(event);
     let [direction, pulsemap,evid,rid] = await fetchPulsemap();
-    createEventText2(evid,rid)
+    clearAll();
+    createEventText2(rid,evid)
     createPulses(pulsemap, scaleFactor)
     createTrack(direction);
     createDOMs(scaleFactor);
